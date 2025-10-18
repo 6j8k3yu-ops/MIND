@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正念時刻</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:'Microsoft JhengHei',sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .5s}
+.container{text-align:center;color:white;max-width:600px;padding:40px;opacity:0;animation:fadeIn 1s forwards}
+.text{font-size:2.2rem;line-height:1.6;margin-bottom:20px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
+.hint{font-size:1.1rem;opacity:.7;margin-top:30px;animation:pulse 2s infinite}
+.circle{width:200px;height:200px;border:3px solid rgba(255,255,255,.3);border-radius:50%;margin:30px auto;display:none;position:relative}
+.circle::before{content:'';position:absolute;top:50%;left:50%;width:50px;height:50px;background:rgba(255,255,255,.6);border-radius:50%;transform:translate(-50%,-50%)}
+.circle.inhale::before{animation:breathIn 7s ease}
+.circle.exhale::before{animation:breathOut 2s ease}
+.final{background:rgba(255,255,255,.1);padding:30px;border-radius:20px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);margin-top:20px}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes breathIn{100%{transform:translate(-50%,-50%) scale(3)}}
+@keyframes breathOut{0%{transform:translate(-50%,-50%) scale(3)}100%{transform:translate(-50%,-50%) scale(1)}}
+.s2{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.s3{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.s4{background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)}
+.s5{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
+@media (max-width:768px){.container{padding:20px}.text{font-size:1.8rem}.circle{width:150px;height:150px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="text" id="text">你此時在哪裡？</div>
+<div class="hint" id="hint">點擊任何地方繼續</div>
+<div class="circle" id="circle"></div>
+</div>
+<script>
+let stage=1,canRestart=false;
+const b=document.body,t=document.getElementById('text'),h=document.getElementById('hint'),c=document.getElementById('circle');
+const stages={1:{text:"你此時在哪裡？",hint:"點擊任何地方繼續",cls:""},2:{text:"感受如何？興奮、憤怒、煩躁？",hint:"點擊任何地方繼續",cls:"s2"},3:{text:"讓我們一起慢慢吸氣~",hint:"",cls:"s3"},4:{text:"好~ 吐氣",hint:"",cls:"s4"},5:{text:"謝謝你誕生在這個世界",hint:"",cls:"s5"}};
+function update(s){t.style.opacity='0';setTimeout(()=>{t.innerHTML=s==5?`<div class="final"><div>${stages[5].text}</div><div style="margin-top:15px">有你真好</div></div>`:stages[s].text;t.style.opacity='1'},300);h.style.display=stages[s].hint?'block':'none';h.innerHTML=stages[s].hint;b.className=stages[s].cls}
+function restart(){stage=1;canRestart=false;b.className='';c.style.display='none';c.className='circle';update(1);b.addEventListener('click',click)}
+function click(){if(canRestart){restart();return}if(stage==1){stage=2;update(2)}else if(stage==2){stage=3;update(3);b.removeEventListener('click',click);setTimeout(()=>{c.style.display='block';c.classList.add('inhale');setTimeout(()=>{stage=4;update(4);c.classList.remove('inhale');c.classList.add('exhale');setTimeout(()=>{stage=5;c.style.display='none';t.style.opacity='0';setTimeout(()=>{update(5);setTimeout(()=>{h.style.display='block';h.innerHTML='<div style="font-size:1.3rem">想要再來一次嗎？</div><div style="font-size:1rem;margin-top:10px">請任意點擊</div>';canRestart=true;b.addEventListener('click',click)},2000)},300)},2000)},7000)},500)}}
+b.addEventListener('click',click);
+b.addEventListener('selectstart',e=>e.preventDefault());
+</script>
+</body>
+</html>
+```
+
+---
+
+## 🎯 現在請：
+
+**複製這個網址打開：**
+```
+https://github.com/6j8k3yu-ops/MIND/new/main?filename=index.html
